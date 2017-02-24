@@ -68,12 +68,14 @@ func (b *Bridge) Handler(w http.ResponseWriter, r *http.Request) {
 
 // WriterError w
 func (b *Bridge) WriteError(w http.ResponseWriter, r *http.Request, e string) {
+	b.Log.Error(e)
 	w.WriteHeader(http.StatusBadRequest)
 	w.Write([]byte("Bad Request\n"))
 }
 
 // WriteSuccess w
 func (b *Bridge) WriteSuccess(w http.ResponseWriter, r *http.Request, m string) {
+	b.Log.Info("Request Successful")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("OK\n"))
 }
