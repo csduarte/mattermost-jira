@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"log"
+	"flag"
 	"net/http"
 	"os"
 
@@ -10,6 +9,15 @@ import (
 )
 
 func main() {
+
+	var logLocation string
+	var logVerbose bool
+
+	flag.StringVar(&logLocation, "log", "./mattermost-jira.log", "Log file path")
+	flag.BoolVar(&logVerbose, "v", false, "Sets logs to debug level")
+	flag.Parse()
+
+	log := initLog(logLocation, logVerbose)
 
 	port := os.Getenv("MJ_PORT")
 	if port == "" {
@@ -22,9 +30,10 @@ func main() {
 	}
 
 	location := addr + ":" + port
-	fmt.Printf("Server starting on %s\n", location)
+	log.Infof("Server starting on %s", location)
 
 	jbridge := jira.NewBridge()
+	// jbridge.Log = log.
 	http.HandleFunc("/", jbridge.Handler)
 
 	log.Fatal(http.ListenAndServe(location, nil))
