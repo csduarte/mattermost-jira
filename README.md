@@ -13,7 +13,7 @@ You need incoming webhook URL in `http://<mattermost_server>/hooks/<web_hook_id>
     - `Enable integrations to override profile picture icons`: `true`
 
 **Create Incoming Webhook**  
-1. Go to `...` menu 
+1. Go to `...` menu
 2. `Integrations` → `Incoming Webhooks`
 3. `Add Incoming Webhook`
  
