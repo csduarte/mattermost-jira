@@ -1,4 +1,4 @@
-package jira
+package bridge
 
 import (
 	"bytes"
@@ -23,8 +23,8 @@ type Bridge struct {
 	Log              *logrus.Logger
 }
 
-// NewBridge generates a default bridge
-func NewBridge() *Bridge {
+// New generates a default bridge
+func New() *Bridge {
 	return &Bridge{
 		Client:           &http.Client{},
 		UsernameOverride: DefaultUsername,

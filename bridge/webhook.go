@@ -1,4 +1,4 @@
-package jira
+package bridge
 
 import (
 	"encoding/json"

@@ -4,8 +4,6 @@ import (
 	"flag"
 	"net/http"
 	"os"
-
-	"github.com/csduarte/mattermost-jira/jira"
 )
 
 func main() {
@@ -32,8 +30,8 @@ func main() {
 	location := addr + ":" + port
 	log.Infof("Server starting on %s", location)
 
-	jbridge := jira.NewBridge()
-	// jbridge.Log = log.
+	jbridge := bridge.New()
+	jbridge.Log = log
 	http.HandleFunc("/", jbridge.Handler)
 
 	log.Fatal(http.ListenAndServe(location, nil))
