@@ -4,6 +4,8 @@ import (
 	"flag"
 	"net/http"
 	"os"
+
+	"github.com/csduarte/mattermost-jira/bridge"
 )
 
 func main() {
