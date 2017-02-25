@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"net/http"
-	"os"
 
 	"github.com/csduarte/mattermost-jira/bridge"
 )
@@ -12,22 +11,16 @@ func main() {
 
 	var logLocation string
 	var logVerbose bool
+	var addr string
+	var port string
 
 	flag.StringVar(&logLocation, "log", "./mattermost-jira.log", "Log file path")
 	flag.BoolVar(&logVerbose, "v", false, "Sets logs to debug level")
+	flag.StringVar(&addr, "addr", "0.0.0.0", "Bind adress")
+	flag.StringVar(&port, "port", "5000", "Listening port")
 	flag.Parse()
 
 	log := initLog(logLocation, logVerbose)
-
-	port := os.Getenv("MJ_PORT")
-	if port == "" {
-		port = "5000"
-	}
-
-	addr := os.Getenv("MJ_BIND_ADDRESS")
-	if addr == "" {
-		addr = "0.0.0.0"
-	}
 
 	location := addr + ":" + port
 	log.Infof("Server starting on %s", location)

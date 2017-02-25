@@ -33,7 +33,7 @@ You need incoming webhook URL in `http://<mattermost_server>/hooks/<web_hook_id>
 ## Run
 `./mattermost-jira` map flag optional if you want room mapping
 `./mattermost-jira 2&1 >> data.log &`  pipe stderr and stdout to file and disown process
-
+`./mattermost-jira -addr=127.0.0.1 -port=5002 -log=./test.log`
 ## Test
 While server is running in background or different session, execute:
 
