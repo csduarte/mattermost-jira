@@ -62,8 +62,19 @@ func (b *Bridge) Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer res.Body.Close()
-	ioutil.ReadAll(res.Body)
-	b.WriteSuccess(w, r, "Webhook sent successfull")
+
+	code := res.StatusCode
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		b.WriteError(w, r, err.Error())
+		return
+	}
+	b.WriteSuccess(w, r, logrus.Fields{
+		"url":     hookURL,
+		"channel": channelOverride,
+		"res":     code,
+		"body":    string(body),
+	})
 }
 
 // WriterError w
@@ -74,8 +85,8 @@ func (b *Bridge) WriteError(w http.ResponseWriter, r *http.Request, e string) {
 }
 
 // WriteSuccess w
-func (b *Bridge) WriteSuccess(w http.ResponseWriter, r *http.Request, m string) {
-	b.Log.Info("Request Successful")
+func (b *Bridge) WriteSuccess(w http.ResponseWriter, r *http.Request, fields logrus.Fields) {
+	b.Log.WithFields(fields).Info("Webhook Result")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("OK\n"))
 }

@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 
 	"github.com/Sirupsen/logrus"
+	"github.com/rifflock/lfshook"
 )
 
 func initLog(path string, verbose bool) *logrus.Logger {
@@ -16,23 +16,18 @@ func initLog(path string, verbose bool) *logrus.Logger {
 		os.Exit(1)
 	}
 
-	f, err := os.OpenFile(absPath, os.O_WRONLY|os.O_CREATE, 0755)
-	if err != nil {
-		fmt.Println("Failed to open/create log -", err.Error())
-		os.Exit(1)
-	}
-
-	multi := io.MultiWriter(f, os.Stdout)
-
 	if verbose {
 		logrus.SetLevel(logrus.DebugLevel)
 	} else {
 		logrus.SetLevel(logrus.InfoLevel)
 	}
 
-	logrus.SetFormatter(&logrus.JSONFormatter{})
-	logrus.SetOutput(multi)
 	log := logrus.New()
+	fileHook := lfshook.NewHook(lfshook.PathMap{
+		logrus.InfoLevel: absPath,
+	})
+	fileHook.SetFormatter(&logrus.JSONFormatter{})
+	log.Hooks.Add(fileHook)
 	log.Infof("Logs: %s", absPath)
 	return log
 }
