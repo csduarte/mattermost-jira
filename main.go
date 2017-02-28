@@ -1,30 +1,32 @@
 package main
 
 import (
-	"fmt"
-	"log"
+	"flag"
 	"net/http"
-	"os"
 
-	"github.com/csduarte/mattermost-jira/jira"
+	"github.com/csduarte/mattermost-jira/bridge"
 )
 
 func main() {
 
-	port := os.Getenv("MJ_PORT")
-	if port == "" {
-		port = "5000"
-	}
+	var logLocation, addr, port string
+	var logVerbose bool
 
-	addr := os.Getenv("MJ_BIND_ADDRESS")
-	if addr == "" {
-		addr = "0.0.0.0"
-	}
+	flag.StringVar(&logLocation, "log", "./mattermost-jira.log", "Log file path")
+	flag.BoolVar(&logVerbose, "v", false, "Sets logs to debug level")
+	flag.StringVar(&addr, "address", "0.0.0.0", "Bind adress")
+	flag.StringVar(&port, "port", "5000", "Listening port")
+	flag.Parse()
+
+	log := initLog(logLocation, logVerbose)
+	log.Info("Log Location:", logLocation)
+	log.Info("Verbose Log:", logVerbose)
 
 	location := addr + ":" + port
-	fmt.Printf("Server starting on %s\n", location)
+	log.Infof("Server starting on %s", location)
 
-	jbridge := jira.NewBridge()
+	jbridge := bridge.New()
+	jbridge.Log = log
 	http.HandleFunc("/", jbridge.Handler)
 
 	log.Fatal(http.ListenAndServe(location, nil))

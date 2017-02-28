@@ -26,4 +26,6 @@ _testmain.go
 .vscode/
 debug
 mattermost-jira
+mattermost-jira.log
 data.log
+vendor/
