@@ -1,4 +1,0 @@
-{"level":"info","msg":"Logs: /Users/dchristopher/gocode/src/github.com/csduarte/mattermost-jira/mattermost-jira.log","time":"2017-02-28T06:39:33-08:00"}
-{"level":"info","msg":"Log Location:./mattermost-jira.log","time":"2017-02-28T06:39:33-08:00"}
-{"level":"info","msg":"Verbose Log:false","time":"2017-02-28T06:39:33-08:00"}
-{"level":"info","msg":"Server starting on 0.0.0.0:5000","time":"2017-02-28T06:39:33-08:00"}
