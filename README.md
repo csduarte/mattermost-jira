@@ -51,4 +51,12 @@ do
 	(curl -X POST -H "Content-Type: application/json" --data @sample_hook.json "localhost:5000?mattermost_hook_url=http://localhost:8065/hooks/67qhmgccxffaunr886gfewoqfo&channel=town-square") &
 done
 ```
-        
+
+## Best Practices 
+
+In general, teams work best when Jira alerts are customized to specific projects, issue types and events, for example:
+ 
+- **New bugs created in Project X** - For a developer looking for feedback prior to release 
+- **All newly opened and updated security issues in any project** - For a channel monitoring system security 
+- **Resolved issues in Project A** - For a quality assurance team ready to test and close a resolved issue. 
+- **All deleted issues** - For a channel monitoring any inappropriately deleted tickets
