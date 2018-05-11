@@ -1,4 +1,4 @@
-package bridge 
+package bridge
 
 import "encoding/json"
 
@@ -10,7 +10,7 @@ type Message struct {
 	IconURL  string `json:"icon_url"`
 }
 
-// NewMessageFromWebhook w
+// NewMessageFromWebhook constructs for a basic message for uChat
 func NewMessageFromWebhook(w *Webhook, b *Bridge, channel string) *Message {
 	return &Message{
 		Text:     w.String(),
