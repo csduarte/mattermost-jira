@@ -52,3 +52,9 @@ do
 done
 ```
         
+
+
+        
+
+
+        curl -X POST -H "Content-Type: application/json" --data @sample_hook.json "jira-uchat-integration.corp.uber.internal?mattermost_hook_url=http://uchat-sandbox.corp.uber.internal/hooks/9kbfs1yooprsujd3ckadw4z66a&channel=super-test")
