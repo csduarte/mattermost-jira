@@ -1,0 +1,4 @@
+github.com/Sirupsen/logrus v0.11.2/go.mod h1:rmk17hk6i8ZSAJkSDa7nOxamrG+SP4P0mm+DAvExv4U=
+github.com/rifflock/lfshook v0.0.0-20170215182608-1ae91782cf87/go.mod h1:GEXHk5HgEKCvEIIrSpFI3ozzG5xOKA2DVlEX/gGnewM=
+github.com/sirupsen/logrus v0.11.4/go.mod h1:pMByvHTf9Beacp5x1UXfOR9xyW/9antXMhjMPG0dEzc=
+golang.org/x/sys v0.0.0-20161006025142-8d1157a43547/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
