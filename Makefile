@@ -25,7 +25,6 @@ run: .prebuild
 	./mattermost-jira
 
 .prebuild:
-	@echo Preparation for running go code
-	go get $(GOFLAGS) github.com/Masterminds/glide
+	@echo Prebuild current unused 
 
 	touch $@
