@@ -39,7 +39,7 @@ type Webhook struct {
 	}
 }
 
-// NewWebhookfromJSON decodes io to a webhook struct
+// NewWebhookfromJSON decodes io to a webhook struct.
 func NewWebhookfromJSON(d io.ReadCloser) (*Webhook, error) {
 	decoder := json.NewDecoder(d)
 	var w Webhook
@@ -47,19 +47,19 @@ func NewWebhookfromJSON(d io.ReadCloser) (*Webhook, error) {
 	return &w, err
 }
 
-// MDUserIcon w
+// MDUserIcon format the user avatar to a markdown image.
 func (w *Webhook) MDUserIcon() string {
 	return fmt.Sprintf("![user_icon](%s)", w.User.AvatarUrls["16x16"])
 }
 
-// MDUserLink w
+// MDUserLink format the user link to a markdown link.
 func (w *Webhook) MDUserLink() string {
 	u, _ := url.Parse(w.Issue.Self)
 	return fmt.Sprintf("[%s](%s://%s/secure/ViewProfile.jspa?name=%s)",
 		w.User.DisplayName, u.Scheme, u.Host, w.User.Name)
 }
 
-// MDAction w
+// MDAction format the webhook event to an action stream.
 func (w *Webhook) MDAction() string {
 	var action string
 	switch w.WebhookEvent {
@@ -73,17 +73,17 @@ func (w *Webhook) MDAction() string {
 	return action
 }
 
-// MDIssueType w
+// MDIssueType Get the name value and lowercase the IssueType.
 func (w *Webhook) MDIssueType() string {
 	return strings.ToLower(w.Issue.Fields.Issuetype.Name)
 }
 
-// MDTaskIcon w
+// MDTaskIcon formatss the Task Icon as a markdown image.
 func (w *Webhook) MDTaskIcon() string {
 	return fmt.Sprintf("![task_icon](%s)", w.Issue.Fields.Issuetype.IconURL)
 }
 
-// MDIssueLink w
+// MDIssueLink formats the issue link as a markdown link.
 func (w *Webhook) MDIssueLink() string {
 	u, _ := url.Parse(w.Issue.Self)
 	return fmt.Sprintf("[%s](%s://%s/browse/%s)",
@@ -94,12 +94,12 @@ func (w *Webhook) MDIssueLink() string {
 	)
 }
 
-// MDSummary W
+// MDSummary Pulls out the summary from the webhook.
 func (w *Webhook) MDSummary() string {
 	return fmt.Sprintf("%q", w.Issue.Fields.Summary)
 }
 
-// MDChangelog w
+// MDChangelog Will generate the strikethrough markdown for changes.
 func (w *Webhook) MDChangelog() string {
 	var changelog string
 	if len(w.Changelog.Items) < 1 {
@@ -127,7 +127,7 @@ func (w *Webhook) MDChangelog() string {
 	return changelog
 }
 
-// MDComment w
+// MDComment forms the comment body as a new line markdown
 func (w *Webhook) MDComment() string {
 	var comment string
 	if len(w.Comment.Body) > 0 {
@@ -136,12 +136,15 @@ func (w *Webhook) MDComment() string {
 	return comment
 }
 
-/*Text format:
+/*Text format/Expired (Icons are no longer used):
 ![user_icon](user_icon_link)[UserFirstName UserSecondName](user_link) commented task ![task_icon](task_icon link)[TSK-42](issue_link) "Test task" Status Comments
 */
+/*Text format:
+[UserFirstName UserSecondName](user_link) commented task [TSK-42](issue_link) "Test task" Status Comments
+*/
 func (w *Webhook) String() string {
-	return fmt.Sprintf("%s %s %s %s %s %s %s%s%s",
-		w.MDUserIcon(), w.MDTaskIcon(), w.MDUserLink(),
-		w.MDAction(), w.MDIssueType(), w.MDIssueLink(),
-		w.MDSummary(), w.MDChangelog(), w.MDComment())
+	return fmt.Sprintf("%s %s %s %s %s%s%s",
+		w.MDUserLink(), w.MDAction(), w.MDIssueType(),
+		w.MDIssueLink(), w.MDSummary(), w.MDChangelog(),
+		w.MDComment())
 }

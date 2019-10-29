@@ -8,10 +8,9 @@ import (
 	"github.com/Sirupsen/logrus"
 )
 
+// Defaults values for Bot icons
 const (
-	// DefaultIconURL w
-	DefaultIconURL = "https://raw.githubusercontent.com/csduarte/mattermost-jira/master/assets/logo.png"
-	// DefaultUsername w
+	DefaultIconURL  = "https://raw.githubusercontent.com/csduarte/mattermost-jira/master/assets/logo.png"
 	DefaultUsername = "JIRA"
 )
 
@@ -77,14 +76,14 @@ func (b *Bridge) Handler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// WriterError w
+// WriteError is a shortcut for writing error response to ResponseWriter.
 func (b *Bridge) WriteError(w http.ResponseWriter, r *http.Request, e string) {
 	b.Log.Error(e)
 	w.WriteHeader(http.StatusBadRequest)
 	w.Write([]byte("Bad Request\n"))
 }
 
-// WriteSuccess w
+// WriteSuccess is a shortcut for writing OK response to ResponseWriter.
 func (b *Bridge) WriteSuccess(w http.ResponseWriter, r *http.Request, fields logrus.Fields) {
 	b.Log.WithFields(fields).Info("Webhook Result")
 	w.WriteHeader(http.StatusOK)
